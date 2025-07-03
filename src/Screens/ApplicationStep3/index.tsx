@@ -153,6 +153,21 @@ const ApplicationStep3Page = () => {
         rearAxles: "",
         loanLease: "no",
       };
+    } else {
+      return {
+        vehicleType: veh.vehicleType || "",
+        addVehicleBy: "yearMakeModel",
+        year: "",
+        make: "",
+        zipCode: "33316",
+        farthestDistance: "",
+        antiLockBrakes: "yes",
+        antiTheftDevices: "",
+        driverAirbag: "no",
+        grossVehicleWeight: "",
+        rearAxles: "",
+        loanLease: "no",
+      };
     }
   });
 
