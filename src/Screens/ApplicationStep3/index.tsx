@@ -135,26 +135,20 @@ const ApplicationStep3Page = () => {
   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("quoteData");
-      const veh = stored ? JSON.parse(stored) : {};
-      return {
-        vehicleType: veh.vehicleType || "",
-        addVehicleBy: "yearMakeModel",
-        year: "",
-        make: "",
-        zipCode: "33316",
-        farthestDistance: "",
-        antiLockBrakes: "yes",
-        antiTheftDevices: "",
-        driverAirbag: "no",
-        grossVehicleWeight: "",
-        rearAxles: "",
-        loanLease: "no",
-      };
-    }
-  });
+  const [formData, setFormData] = useState({
+  vehicleType: "",
+  addVehicleBy: "yearMakeModel",
+  year: "",
+  make: "",
+  zipCode: "33316",
+  farthestDistance: "",
+  antiLockBrakes: "yes",
+  antiTheftDevices: "",
+  driverAirbag: "no",
+  grossVehicleWeight: "",
+  rearAxles: "",
+  loanLease: "no",
+});
 
   useEffect(() => {
     const savedData = localStorage.getItem("applicationStep3");
