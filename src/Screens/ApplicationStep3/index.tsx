@@ -149,6 +149,14 @@ const ApplicationStep3Page = () => {
   rearAxles: "",
   loanLease: "no",
 });
+  useEffect(() => {
+  const stored = localStorage.getItem("quoteData");
+  const veh = stored ? JSON.parse(stored) : {};
+  setFormData((prev) => ({
+    ...prev,
+    vehicleType: veh?.vehicleType ?? "",
+  }));
+}, []);
 
   useEffect(() => {
     const savedData = localStorage.getItem("applicationStep3");
