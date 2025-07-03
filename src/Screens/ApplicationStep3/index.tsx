@@ -126,21 +126,7 @@ const VehicleTypeModal = ({
 
 const ApplicationStep3Page = () => {
   const router = useRouter();
-  let veh = {
-    vehicleType: "",
-        addVehicleBy: "yearMakeModel",
-        year: "",
-        make: "",
-        zipCode: "33316",
-        farthestDistance: "",
-        antiLockBrakes: "yes",
-        antiTheftDevices: "",
-        driverAirbag: "no",
-        grossVehicleWeight: "",
-        rearAxles: "",
-        loanLease: "no",
-      };
-  };
+  let veh = null;
 
   useEffect(() => {
     const vType = localStorage.getItem("quoteData");
@@ -152,36 +138,7 @@ const ApplicationStep3Page = () => {
   const [formData, setFormData] = useState(() => {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("quoteData");
-      const veh = stored ? JSON.parse(stored) : {
-        vehicleType: "",
-        addVehicleBy: "yearMakeModel",
-        year: "",
-        make: "",
-        zipCode: "33316",
-        farthestDistance: "",
-        antiLockBrakes: "yes",
-        antiTheftDevices: "",
-        driverAirbag: "no",
-        grossVehicleWeight: "",
-        rearAxles: "",
-        loanLease: "no",
-      };
-      };
-      return {
-        vehicleType: veh?.vehicleType || "",
-        addVehicleBy: "yearMakeModel",
-        year: "",
-        make: "",
-        zipCode: "33316",
-        farthestDistance: "",
-        antiLockBrakes: "yes",
-        antiTheftDevices: "",
-        driverAirbag: "no",
-        grossVehicleWeight: "",
-        rearAxles: "",
-        loanLease: "no",
-      };
-    } else {
+      const veh = stored ? JSON.parse(stored) : {};
       return {
         vehicleType: veh.vehicleType || "",
         addVehicleBy: "yearMakeModel",
@@ -204,6 +161,9 @@ const ApplicationStep3Page = () => {
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
+        // Merge the saved data with the initial state structure.
+        // This ensures that if any key is missing from localStorage,
+        // it falls back to the default value (e.g., "") instead of becoming undefined.
         setFormData({ ...formData, ...parsedData });
       } catch (error) {
         console.error("Failed to parse form data from localStorage", error);
@@ -241,7 +201,7 @@ const ApplicationStep3Page = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
             <label className="font-medium">Vehicle Type</label>
             <div className="md:col-span-2 flex justify-between items-center">
-              <span>{formData?.vehicleType}</span>
+              <span>{formData.vehicleType}</span>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(true)}
@@ -267,7 +227,7 @@ const ApplicationStep3Page = () => {
                   type="radio"
                   name="addVehicleBy"
                   value="yearMakeModel"
-                  checked={formData?.addVehicleBy === "yearMakeModel"}
+                  checked={formData.addVehicleBy === "yearMakeModel"}
                   onChange={handleInputChange}
                 />
                 <span>Year, Make, Model</span>
@@ -277,7 +237,7 @@ const ApplicationStep3Page = () => {
                   type="radio"
                   name="addVehicleBy"
                   value="vin"
-                  checked={formData?.addVehicleBy === "vin"}
+                  checked={formData.addVehicleBy === "vin"}
                   onChange={handleInputChange}
                 />
                 <span>VIN</span>
@@ -293,7 +253,7 @@ const ApplicationStep3Page = () => {
             <select
               id="year"
               name="year"
-              value={formData?.year}
+              value={formData.year}
               onChange={handleInputChange}
               className="md:col-span-2 w-full h-12 px-4 rounded-md border border-gray-300 bg-white"
             >
@@ -317,7 +277,7 @@ const ApplicationStep3Page = () => {
             <select
               id="make"
               name="make"
-              value={formData?.make}
+              value={formData.make}
               onChange={handleInputChange}
               className="md:col-span-2 w-full h-12 px-4 rounded-md border border-gray-300 bg-white"
             >
@@ -356,7 +316,7 @@ const ApplicationStep3Page = () => {
               id="zipCode"
               name="zipCode"
               type="text"
-              value={formData?.zipCode}
+              value={formData.zipCode}
               onChange={handleInputChange}
               className="md:col-span-2 w-full h-12 px-4 rounded-md border border-gray-300"
               required
@@ -373,7 +333,7 @@ const ApplicationStep3Page = () => {
             <select
               id="farthestDistance"
               name="farthestDistance"
-              value={formData?.farthestDistance}
+              value={formData.farthestDistance}
               onChange={handleInputChange}
               className="md:col-span-2 w-full h-12 px-4 rounded-md border border-gray-300 bg-white"
             >
@@ -401,7 +361,7 @@ const ApplicationStep3Page = () => {
                   type="radio"
                   name="antiLockBrakes"
                   value="yes"
-                  checked={formData?.antiLockBrakes === "yes"}
+                  checked={formData.antiLockBrakes === "yes"}
                   onChange={handleInputChange}
                 />
                 <span>Yes</span>
@@ -411,7 +371,7 @@ const ApplicationStep3Page = () => {
                   type="radio"
                   name="antiLockBrakes"
                   value="no"
-                  checked={formData?.antiLockBrakes === "no"}
+                  checked={formData.antiLockBrakes === "no"}
                   onChange={handleInputChange}
                 />
                 <span>No</span>
@@ -433,7 +393,7 @@ const ApplicationStep3Page = () => {
             <select
               id="antiTheftDevices"
               name="antiTheftDevices"
-              value={formData?.antiTheftDevices}
+              value={formData.antiTheftDevices}
               onChange={handleInputChange}
               className="md:col-span-2 w-full h-12 px-4 rounded-md border border-gray-300 bg-white"
             >
@@ -458,7 +418,7 @@ const ApplicationStep3Page = () => {
                   type="radio"
                   name="driverAirbag"
                   value="yes"
-                  checked={formData?.driverAirbag === "yes"}
+                  checked={formData.driverAirbag === "yes"}
                   onChange={handleInputChange}
                 />
                 <span>Yes</span>
@@ -468,7 +428,7 @@ const ApplicationStep3Page = () => {
                   type="radio"
                   name="driverAirbag"
                   value="no"
-                  checked={formData?.driverAirbag === "no"}
+                  checked={formData.driverAirbag === "no"}
                   onChange={handleInputChange}
                 />
                 <span>No</span>
@@ -485,7 +445,7 @@ const ApplicationStep3Page = () => {
             <select
               id="grossVehicleWeight"
               name="grossVehicleWeight"
-              value={formData?.grossVehicleWeight}
+              value={formData.grossVehicleWeight}
               onChange={handleInputChange}
               className="md:col-span-2 w-full h-12 px-4 rounded-md border border-gray-300 bg-white"
             >
@@ -510,7 +470,7 @@ const ApplicationStep3Page = () => {
             <select
               id="rearAxles"
               name="rearAxles"
-              value={formData?.rearAxles}
+              value={formData.rearAxles}
               onChange={handleInputChange}
               className="md:col-span-2 w-full h-12 px-4 rounded-md border border-gray-300 bg-white"
             >
@@ -534,7 +494,7 @@ const ApplicationStep3Page = () => {
                   type="radio"
                   name="loanLease"
                   value="loan"
-                  checked={formData?.loanLease === "loan"}
+                  checked={formData.loanLease === "loan"}
                   onChange={handleInputChange}
                 />
                 <span>Yes, I have a loan</span>
@@ -544,7 +504,7 @@ const ApplicationStep3Page = () => {
                   type="radio"
                   name="loanLease"
                   value="lease"
-                  checked={formData?.loanLease === "lease"}
+                  checked={formData.loanLease === "lease"}
                   onChange={handleInputChange}
                 />
                 <span>Yes, I have a lease</span>
@@ -554,7 +514,7 @@ const ApplicationStep3Page = () => {
                   type="radio"
                   name="loanLease"
                   value="no"
-                  checked={formData?.loanLease === "no"}
+                  checked={formData.loanLease === "no"}
                   onChange={handleInputChange}
                 />
                 <span>No</span>
@@ -584,7 +544,7 @@ const ApplicationStep3Page = () => {
       <VehicleTypeModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        currentValue={formData?.vehicleType}
+        currentValue={formData.vehicleType}
         onSave={handleVehicleTypeSave}
       />
     </div>
